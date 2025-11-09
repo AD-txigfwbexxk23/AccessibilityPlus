@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AccessibilityPlus Map</title>
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/map.css" />
     <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script defer src="/static/js/map.js"></script>
+    <script defer src="/static/js/metrics.js"></script>
   </head>
   <body>
     <div class="aurora-canvas" aria-hidden="true">
@@ -27,11 +29,15 @@
 
     <div class="shell nav-shell">
       <nav class="nav glass">
-        <div class="brand">AccessibilityPlus</div>
+        <div class="brand">
+          <img src="/static/img/favicon.svg" alt="" class="brand-mark" />
+          AccessibilityPlus
+        </div>
         <div class="nav-links">
           <a href="/">Report</a>
           <a href="/map" class="is-active">Live Map</a>
-          <a href="mailto:hello@accessibility.plus">Partner</a>
+          <a href="/#team">Team</a>
+          <a href="mailto:divakargaba@gmail.com">Partner</a>
         </div>
       </nav>
     </div>
@@ -51,16 +57,16 @@
         </div>
         <div class="hero-stats">
           <div class="stat-card">
-            <span class="stat-value">342</span>
+            <span class="stat-value" data-stat="reports-count">--</span>
             <span class="stat-label">Live markers</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">88%</span>
+            <span class="stat-value" data-stat="avg-confidence">--</span>
             <span class="stat-label">Avg. confidence</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">14</span>
-            <span class="stat-label">Hotspot clusters</span>
+            <span class="stat-value" data-stat="high-confidence-share">--</span>
+            <span class="stat-label">Confidence ≥ 80%</span>
           </div>
         </div>
       </div>
@@ -72,18 +78,18 @@
           <div class="grid-lines"></div>
 
           <div class="holo-card primary-card">
-            <span class="pill success">Cluster surge</span>
-            <strong>Transit corridor</strong>
+            <span class="pill success">Fresh activity</span>
+            <strong><span data-stat="reports-24h">--</span> new reports</strong>
             <div class="progress">
-              <span class="progress-fill" style="--progress: 0.74"></span>
+              <span class="progress-fill" data-progress="reports-24h-ratio" style="--progress: 0"></span>
             </div>
-            <small>6 new reports in the past hour</small>
+            <small>Past 24 hours · Updated <span data-stat="last-updated">--</span></small>
           </div>
 
           <div class="holo-card secondary-card alt">
             <span class="pill warning">Review queue</span>
-            <strong>Accessibility audit</strong>
-            <small>4 mismatched descriptions flagged</small>
+            <strong><span data-stat="mismatch-count">--</span> checks queued</strong>
+            <small>AI &amp; human mismatch resolution</small>
           </div>
 
           <div class="spark spark-one"></div>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AccessibilityPlus Reporter</title>
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,6 +13,7 @@
     />
     <link rel="stylesheet" href="/static/css/styles.css" />
     <script defer src="/static/js/report.js"></script>
+    <script defer src="/static/js/metrics.js"></script>
   </head>
   <body>
     <div class="aurora-canvas" aria-hidden="true">
@@ -24,11 +26,15 @@
 
     <div class="shell nav-shell">
       <nav class="nav glass">
-        <div class="brand">AccessibilityPlus</div>
+        <div class="brand">
+          <img src="/static/img/favicon.svg" alt="" class="brand-mark" />
+          AccessibilityPlus
+        </div>
         <div class="nav-links">
           <a href="/" class="is-active">Report</a>
           <a href="/map">Live Map</a>
-          <a href="mailto:hello@accessibility.plus">Partner</a>
+          <a href="#team">Team</a>
+          <a href="mailto:divakargaba@gmail.com">Partner</a>
         </div>
       </nav>
     </div>
@@ -50,16 +56,16 @@
         </div>
         <div class="hero-stats">
           <div class="stat-card">
-            <span class="stat-value">45s</span>
-            <span class="stat-label">Avg. verification</span>
+            <span class="stat-value" data-stat="reports-count">--</span>
+            <span class="stat-label">Reports submitted</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">92%</span>
-            <span class="stat-label">AI confidence high</span>
+            <span class="stat-value" data-stat="avg-confidence">--</span>
+            <span class="stat-label">Avg AI confidence</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">Realtime</span>
-            <span class="stat-label">GeoJSON updates</span>
+            <span class="stat-value" data-stat="last-updated">--</span>
+            <span class="stat-label">Last update</span>
           </div>
         </div>
       </div>
@@ -74,15 +80,15 @@
             <span class="pill success">Ramp detected</span>
             <strong>Match score</strong>
             <div class="progress">
-              <span class="progress-fill" style="--progress: 0.88"></span>
+              <span class="progress-fill" data-progress="avg-confidence" style="--progress: 0"></span>
             </div>
-            <small>GPT verification 88% confidence</small>
+            <small>AI verification <span data-stat="avg-confidence">--</span></small>
           </div>
 
           <div class="holo-card secondary-card">
             <span class="pill warning">Needs review</span>
-            <strong>Missing tactile paving</strong>
-            <small>Flagged in 12 nearby locations</small>
+            <strong>Review queue</strong>
+            <small><span data-stat="mismatch-count">--</span> reports flagged for review</small>
           </div>
 
           <div class="spark spark-one"></div>
@@ -171,6 +177,10 @@
           Share a description and photo to get started.
         </div>
 
+        <div class="submit-progress" id="submit-progress" role="progressbar" aria-hidden="true" hidden>
+          <span class="submit-progress-bar"></span>
+        </div>
+
         <div class="card-footer">
           <p class="hint">
             Location capture uses the browser's Geolocation API. It requires
@@ -239,18 +249,18 @@
         <div class="metric-grid">
           <div class="metric-card">
             <span class="metric-label">Live map nodes</span>
-            <span class="metric-value">342</span>
-            <span class="metric-trend up">+28 this week</span>
+            <span class="metric-value" data-stat="reports-count">--</span>
+            <span class="metric-trend up">Real-time</span>
           </div>
           <div class="metric-card">
             <span class="metric-label">Avg. GPT agreement</span>
-            <span class="metric-value">91%</span>
-            <span class="metric-trend neutral">Stable</span>
+            <span class="metric-value" data-stat="avg-confidence">--</span>
+            <span class="metric-trend neutral">Rolling avg</span>
           </div>
           <div class="metric-card">
             <span class="metric-label">High-priority alerts</span>
-            <span class="metric-value">17</span>
-            <span class="metric-trend warn">Escalated</span>
+            <span class="metric-value" data-stat="mismatch-count">--</span>
+            <span class="metric-trend warn">AI review queue</span>
           </div>
         </div>
       </section>
@@ -282,6 +292,124 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section id="team" class="card team card-wide shell">
+      <div class="team-header">
+        <span class="eyebrow subtle">Builders behind the platform</span>
+        <h2>Meet the AccessibilityPlus developers</h2>
+        <p>
+          We paired on every layer of the stack, trading commits and design notes daily to keep our AWS + AI pipeline sharp and accessible.
+        </p>
+      </div>
+
+      <div class="team-gallery">
+        <button class="team-nav prev" type="button" aria-label="Scroll team backward" data-team-prev>
+          <span aria-hidden="true">&lsaquo;</span>
+        </button>
+
+        <div class="team-track" data-team-track>
+          <article class="team-member" style="--accent: #38bdf8">
+            <div class="team-photo">
+              <span class="team-photo-glow" aria-hidden="true"></span>
+              <img src="/static/img/team/reyansh-badhwar.jpg" alt="Portrait of Reyansh Badhwar" loading="lazy" />
+            </div>
+            <span class="team-badge">ML &amp; Cloud</span>
+            <h3>Reyansh Badhwar</h3>
+            <p class="team-role">Developer · ML &amp; Cloud</p>
+            <p class="team-summary">
+              Co-led the Rekognition modeling, AWS deployment mesh, and cross-stack integrations that keep the live map immediate and trustworthy.
+            </p>
+            <ul class="team-meta">
+              <li>Amazon Rekognition tuning</li>
+              <li>AWS architecture &amp; deployment</li>
+              <li>End-to-end integrations</li>
+            </ul>
+          </article>
+
+          <article class="team-member" style="--accent: #f97316">
+            <div class="team-photo">
+              <span class="team-photo-glow" aria-hidden="true"></span>
+              <img src="/static/img/team/zehaan-walji.jpg" alt="Portrait of Zehaan Walji" loading="lazy" />
+            </div>
+            <span class="team-badge">Vision &amp; UX</span>
+            <h3>Zehaan Walji</h3>
+            <p class="team-role">Developer · Vision &amp; Experience</p>
+            <p class="team-summary">
+              Paired on Rekognition experimentation, interface systems, and orchestration so every interaction feels cinematic yet fast enough for field work.
+            </p>
+            <ul class="team-meta">
+              <li>Rekognition modeling</li>
+              <li>Interface &amp; journey design</li>
+              <li>Product orchestration</li>
+            </ul>
+          </article>
+
+          <article class="team-member" style="--accent: #22d3ee">
+            <div class="team-photo">
+              <span class="team-photo-glow" aria-hidden="true"></span>
+              <img src="/static/img/team/divakar-gaba.jpg" alt="Portrait of Divakar Gaba" loading="lazy" />
+            </div>
+            <span class="team-badge">Cloud Ops</span>
+            <h3>Divakar Gaba</h3>
+            <p class="team-role">Developer · Cloud &amp; Reliability</p>
+            <p class="team-summary">
+              Architected the AWS backbone, codified deployment safety nets, and stress-tested the trust layer so the platform stays resilient under load.
+            </p>
+            <ul class="team-meta">
+              <li>AWS infrastructure automation</li>
+              <li>Data trust &amp; resilience</li>
+              <li>Developer experience</li>
+            </ul>
+          </article>
+
+          <article class="team-member" style="--accent: #a855f7">
+            <div class="team-photo">
+              <span class="team-photo-glow" aria-hidden="true"></span>
+              <img src="/static/img/team/abdullah-warraich.jpg?v=2" alt="Portrait of Abdullah Warraich" loading="lazy" />
+            </div>
+            <span class="team-badge">UI Systems</span>
+            <h3>Abdullah Warraich</h3>
+            <p class="team-role">Developer · UI Systems</p>
+            <p class="team-summary">
+              Co-designed the UI with Zehaan and Rafay, elevating motion, accessibility, and polish while reviewing every flow for inclusive clarity.
+            </p>
+            <ul class="team-meta">
+              <li>Interface architecture</li>
+              <li>Motion &amp; interaction design</li>
+              <li>Accessibility QA</li>
+            </ul>
+          </article>
+
+          <article class="team-member" style="--accent: #facc15">
+            <div class="team-photo">
+              <span class="team-photo-glow" aria-hidden="true"></span>
+              <img src="/static/img/team/rafay-kamran.jpg" alt="Portrait of Rafay Kamran" loading="lazy" />
+            </div>
+            <span class="team-badge">Story &amp; UI</span>
+            <h3>Rafay Kamran</h3>
+            <p class="team-role">Developer · UI &amp; Storytelling</p>
+            <p class="team-summary">
+              Built the narrative visuals with Abdullah and Zehaan, pairing on full-stack flows and pressure-testing each release for an emotive, clear story.
+            </p>
+            <ul class="team-meta">
+              <li>Visual storytelling</li>
+              <li>UI buildouts</li>
+              <li>Experience QA</li>
+            </ul>
+          </article>
+        </div>
+
+        <button class="team-nav next" type="button" aria-label="Scroll team forward" data-team-next>
+          <span aria-hidden="true">&rsaquo;</span>
+        </button>
+      </div>
+
+      <footer class="team-footer">
+        <p>
+          Every developer contributed code, design critiques, and QA across the entire stack—no silos, just a shared obsession with accessible cities.
+        </p>
+      </footer>
     </section>
   </body>
 </html>
