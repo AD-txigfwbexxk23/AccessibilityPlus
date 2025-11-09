@@ -128,4 +128,119 @@ def _load_report_index() -> List[Dict[str, Any]]:
             return []
         raise HTTPException(status_code=500, detail="Unable to load reports manifest.") from exc
 
+def _persist_report(metadata: Dict[str, Any]) -> Dict[str, Any]:
+    metadata_key = f"reports/{metadata['report_id']}/metadata.json"
+    try:
+        s3_client.put_object(
+            Bucket=S3_BUCKET,
+            Key=metadata_key,
+            Body=json.dumps(metadata).encode("utf-8"),
+            ContentType="application/json",
+        )
+
+        reports = _load_report_index()
+        reports.append(metadata)
+        s3_client.put_object(
+            Bucket=S3_BUCKET,
+            Key=REPORTS_INDEX_KEY,
+            Body=json.dumps(reports, indent=2).encode("utf-8"),
+            ContentType="application/json",
+        )
+        return metadata
+    except ClientError as exc:
+        raise HTTPException(status_code=500, detail=f"S3 write failed: {exc.response['Error'].get('Message')}") from exc
+
+
+def _reports_to_geojson(reports: List[Dict[str, Any]]) -> Dict[str, Any]:
+    features = []
+    for report in reports:
+        location = report.get("location") or {}
+        lat = location.get("latitude")
+        lon = location.get("longitude")
+        if lat is None or lon is None:
+            continue
+
+        features.append(
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [lon, lat]},
+                "properties": {
+                    "report_id": report["report_id"],
+                    "description": report["description"],
+                    "labels": report.get("rekognition_labels", []),
+                    "match_summary": report.get("ai_verdict", {}).get("match_summary"),
+                    "confidence": report.get("ai_verdict", {}).get("confidence"),
+                    "image_url": report.get("image", {}).get("presigned_url"),
+                    "created_at": report.get("created_at"),
+                },
+            }
+        )
+
+    return {"type": "FeatureCollection", "features": features}
+
+
+@app.get("/", response_class=HTMLResponse)
+def reporter_page() -> HTMLResponse:
+    return HTMLResponse(_read_static_page("report.html"))
+
+
+@app.get("/map", response_class=HTMLResponse)
+def map_page() -> HTMLResponse:
+    return HTMLResponse(_read_static_page("map.html"))
+
+
+@app.get("/reports")
+def list_reports() -> JSONResponse:
+    reports = _load_report_index()
+    return JSONResponse(content=reports)
+
+
+@app.get("/reports/geojson")
+def reports_geojson() -> JSONResponse:
+    reports = _load_report_index()
+    return JSONResponse(content=_reports_to_geojson(reports))
+
+
+@app.post("/reports")
+async def create_report(
+    description: str = Form(..., min_length=5),
+    latitude: float = Form(...),
+    longitude: float = Form(...),
+    image: UploadFile = File(...),
+):
+    if not image.filename:
+        raise HTTPException(status_code=400, detail="Image upload is required.")
+
+    image_bytes = await image.read()
+    if not image_bytes:
+        raise HTTPException(status_code=400, detail="Uploaded image is empty.")
+
+    report_id = str(uuid.uuid4())
+    uploaded_image = _store_image(report_id, image, image_bytes)
+    detected_labels = _detect_labels(image_bytes)
+    ai_verdict = _evaluate_report(detected_labels, description)
+
+    metadata = {
+        "report_id": report_id,
+        "description": description,
+        "location": {"latitude": latitude, "longitude": longitude},
+        "rekognition_labels": detected_labels,
+        "ai_verdict": ai_verdict,
+        "image": uploaded_image,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    saved_metadata = _persist_report(metadata)
+    return JSONResponse(content=saved_metadata, status_code=201)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(
+        "server:app",
+        host="0.0.0.0",
+        port=int(os.getenv("PORT", "8000")),
+        reload=True,
+    )
 
