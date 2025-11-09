@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AccessibilityPlus Reporter</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script defer src="/static/js/report.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="nav">
+        <div class="brand">AccessibilityPlus</div>
+        <div class="nav-links">
+          <a href="/">Report</a>
+          <a href="/map">Live Map</a>
+          <a href="mailto:hello@accessibility.plus">Partner</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="hero shell split">
+      <div>
+        <h1>Report real-world accessibility with confidence</h1>
+        <p>
+          Capture a quick photo, let the browser lock your location, and our AWS
+          + GPT pipeline verifies the report before it lands on the public map.
+          The more details you share, the faster cities can act.
+        </p>
+        <div class="highlight-grid">
+          <span class="chip">Auto GPS capture</span>
+          <span class="chip">AWS Rekognition</span>
+          <span class="chip">GPT fact-checking</span>
+          <span class="chip">Instant map updates</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <span class="orbit small"></span>
+        <span class="orbit large"></span>
+        <div class="device-card">
+          <div class="device-title">Tactile paving</div>
+          <div class="device-pill">Match 92%</div>
+          <div class="device-bar"></div>
+        </div>
+        <div class="device-card">
+          <div class="device-title">Elevator signage</div>
+          <div class="device-pill">Needs review</div>
+          <div class="device-bar" style="--fill:35%"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card">
+        <h2>Submit accessibility evidence</h2>
+        <ul class="meta-list">
+          <li>
+            <span class="meta-dot"></span>
+            Clear descriptions help the AI validate faster.
+          </li>
+          <li>
+            <span class="meta-dot"></span>
+            Photos should focus on the feature (ramps, elevators, signage).
+          </li>
+          <li>
+            <span class="meta-dot"></span>
+            Location data never leaves our verification pipeline.
+          </li>
+        </ul>
+
+        <form id="report-form">
+          <label>
+            Description
+            <textarea
+              name="description"
+              minlength="5"
+              rows="3"
+              placeholder="e.g., Wheelchair ramp near Main St entrance"
+              required
+            ></textarea>
+          </label>
+
+          <label>
+            Photo
+            <input type="file" name="image" accept="image/*" required />
+          </label>
+
+          <div class="location-row">
+            <input type="hidden" name="latitude" id="latitude" />
+            <input type="hidden" name="longitude" id="longitude" />
+            <p id="location-display" class="location-display">
+              Waiting for location permission…
+            </p>
+          </div>
+
+          <div class="action-row">
+            <button type="button" id="locate-btn">Refresh Location</button>
+            <button type="submit">Submit Report</button>
+          </div>
+        </form>
+
+        <div id="status" class="status-banner" role="status">
+          Share a description and photo to get started.
+        </div>
+
+        <p class="hint">
+          Location capture uses the browser's Geolocation API. It requires HTTPS
+          (or localhost) and explicit permission from the user.
+        </p>
+      </section>
+
+      <section class="card secondary">
+        <h2>View the collective map</h2>
+        <p>
+          Every approved report appears on an interactive Leaflet map with
+          markers, confidence scores, and links to supporting images.
+        </p>
+        <p>
+          Use the map to audit specific neighborhoods, export GeoJSON, or embed
+          the live feed in municipal dashboards.
+        </p>
+        <a class="link-button" href="/map">Open Map</a>
+      </section>
+    </main>
+  </body>
+</html>
