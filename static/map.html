@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AccessibilityPlus Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/css/styles.css" />
     <link rel="stylesheet" href="/static/css/map.css" />
@@ -11,58 +17,104 @@
     <script defer src="/static/js/map.js"></script>
   </head>
   <body>
-    <div class="shell">
-      <nav class="nav">
+    <div class="aurora-canvas" aria-hidden="true">
+      <span class="aurora aurora-one"></span>
+      <span class="aurora aurora-two"></span>
+      <span class="aurora aurora-three"></span>
+    </div>
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <div class="shell nav-shell">
+      <nav class="nav glass">
         <div class="brand">AccessibilityPlus</div>
         <div class="nav-links">
           <a href="/">Report</a>
-          <a href="/map">Live Map</a>
+          <a href="/map" class="is-active">Live Map</a>
           <a href="mailto:hello@accessibility.plus">Partner</a>
         </div>
       </nav>
     </div>
 
-    <header class="hero shell split">
-      <div>
-        <h1>Citywide accessibility, crowdsourced &amp; verified</h1>
+    <header class="hero shell split map-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Live insights</span>
+        <h1>Citywide accessibility, crowdsourced &amp; machine verified.</h1>
         <p>
-          Every marker represents a citizen report that cleared AI verification.
-          Filter by neighborhoods, inspect confidence scores, and jump straight
-          to the supporting images whenever evidence is needed.
+          Every glowing pin is a citizen report that cleared the AWS + GPT trust
+          layer. Zoom into neighborhoods, inspect confidence scores, and pull
+          supporting imagery when evidence matters most.
         </p>
-        <div class="highlight-grid">
-          <span class="chip">AI-verified</span>
-          <span class="chip">GeoJSON export</span>
-          <span class="chip">OpenStreetMap tiles</span>
+        <div class="hero-actions">
+          <a class="link-button primary" href="#map">Jump to map</a>
+          <a class="link-button ghost" href="/">Submit another report</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">342</span>
+            <span class="stat-label">Live markers</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">88%</span>
+            <span class="stat-label">Avg. confidence</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">14</span>
+            <span class="stat-label">Hotspot clusters</span>
+          </div>
         </div>
       </div>
-      <div class="hero-visual">
-        <span class="orbit small"></span>
-        <span class="orbit large"></span>
-        <div class="device-card">
-          <div class="device-title">Ramp cluster</div>
-          <div class="device-pill">6 new pins</div>
-          <div class="device-bar" style="--fill:80%"></div>
-        </div>
-        <div class="device-card">
-          <div class="device-title">Confidence trend</div>
-          <div class="device-pill">Avg 88%</div>
-          <div class="device-bar" style="--fill:88%"></div>
+
+      <div class="hero-visual holo holo-map">
+        <div class="holo-core">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring ring-delay"></div>
+          <div class="grid-lines"></div>
+
+          <div class="holo-card primary-card">
+            <span class="pill success">Cluster surge</span>
+            <strong>Transit corridor</strong>
+            <div class="progress">
+              <span class="progress-fill" style="--progress: 0.74"></span>
+            </div>
+            <small>6 new reports in the past hour</small>
+          </div>
+
+          <div class="holo-card secondary-card alt">
+            <span class="pill warning">Review queue</span>
+            <strong>Accessibility audit</strong>
+            <small>4 mismatched descriptions flagged</small>
+          </div>
+
+          <div class="spark spark-one"></div>
+          <div class="spark spark-two"></div>
+          <div class="spark spark-three"></div>
         </div>
       </div>
     </header>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Leaflet + OSM base tiles</span>
+        <span>Custom GPT trust layer</span>
+        <span>Realtime GeoJSON endpoint</span>
+        <span>High-confidence accessibility insights</span>
+        <span>AccessibilityPlus community</span>
+      </div>
+    </div>
 
     <main class="layout single">
       <section class="card map-card">
         <header class="map-header">
           <div>
+            <span class="eyebrow subtle">Map console</span>
             <h2>Live accessibility map</h2>
             <p>
-              Click a marker to view the user description, Rekognition tags, GPT
-              verdict, and download the image.
+              Click a marker to view the citizen description, Rekognition tags,
+              GPT verdict, and download the image for rapid evidence collection.
             </p>
           </div>
-          <a class="link-button" href="/">Submit another report</a>
+          <a class="link-button ghost" href="/">Submit a new report</a>
         </header>
         <div id="map"></div>
         <div id="map-status" class="status-banner">Loading map…</div>

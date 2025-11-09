@@ -4,6 +4,9 @@ const locateBtn = document.getElementById("locate-btn");
 const latInput = document.getElementById("latitude");
 const lonInput = document.getElementById("longitude");
 const locationDisplay = document.getElementById("location-display");
+const fileInput = document.querySelector(".file-input");
+const fileSelectedRow = document.querySelector("[data-file-selected]");
+const fileNameEl = document.querySelector("[data-file-name]");
 let locationReady = false;
 
 function setStatus(message, type = "info") {
@@ -33,7 +36,7 @@ function handleLocationSuccess(latitude, longitude) {
   lonInput.value = lon;
   locationReady = true;
   setLocationMessage(`Current location locked: ${lat}, ${lon}`, "success");
-  setStatus("Location captured. You can submit now.");
+  setStatus("Location captured. You can submit a report or jump to the live map.");
   locateBtn.disabled = false;
 }
 
@@ -78,6 +81,16 @@ function requestLocation({ silent = false } = {}) {
 
 locateBtn?.addEventListener("click", () => requestLocation());
 requestLocation({ silent: true });
+
+fileInput?.addEventListener("change", () => {
+  const file = fileInput.files?.[0];
+  if (file && fileNameEl && fileSelectedRow) {
+    fileNameEl.textContent = `${file.name} • ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+    fileSelectedRow.hidden = false;
+  } else if (fileSelectedRow) {
+    fileSelectedRow.hidden = true;
+  }
+});
 
 form?.addEventListener("submit", async (event) => {
   event.preventDefault();

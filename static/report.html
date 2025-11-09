@@ -4,15 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AccessibilityPlus Reporter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/static/css/styles.css" />
     <script defer src="/static/js/report.js"></script>
   </head>
   <body>
-    <div class="shell">
-      <nav class="nav">
+    <div class="aurora-canvas" aria-hidden="true">
+      <span class="aurora aurora-one"></span>
+      <span class="aurora aurora-two"></span>
+      <span class="aurora aurora-three"></span>
+    </div>
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <div class="shell nav-shell">
+      <nav class="nav glass">
         <div class="brand">AccessibilityPlus</div>
         <div class="nav-links">
-          <a href="/">Report</a>
+          <a href="/" class="is-active">Report</a>
           <a href="/map">Live Map</a>
           <a href="mailto:hello@accessibility.plus">Partner</a>
         </div>
@@ -20,69 +34,121 @@
     </div>
 
     <header class="hero shell split">
-      <div>
-        <h1>Report real-world accessibility with confidence</h1>
+      <div class="hero-copy">
+        <span class="eyebrow">Field intelligence</span>
+        <h1>
+          Report accessibility wins and gaps with a cinematic, AI-assisted hub.
+        </h1>
         <p>
-          Capture a quick photo, let the browser lock your location, and our AWS
-          + GPT pipeline verifies the report before it lands on the public map.
-          The more details you share, the faster cities can act.
+          Snap, describe, and share your surroundings. Our AWS + GPT trust layer
+          validates every detail and publishes it to the public map within
+          seconds.
         </p>
-        <div class="highlight-grid">
-          <span class="chip">Auto GPS capture</span>
-          <span class="chip">AWS Rekognition</span>
-          <span class="chip">GPT fact-checking</span>
-          <span class="chip">Instant map updates</span>
+        <div class="hero-actions">
+          <a class="link-button primary" href="#report-form">Start reporting</a>
+          <a class="link-button ghost" href="/map">Preview live map</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">45s</span>
+            <span class="stat-label">Avg. verification</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">92%</span>
+            <span class="stat-label">AI confidence high</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">Realtime</span>
+            <span class="stat-label">GeoJSON updates</span>
+          </div>
         </div>
       </div>
-      <div class="hero-visual">
-        <span class="orbit small"></span>
-        <span class="orbit large"></span>
-        <div class="device-card">
-          <div class="device-title">Tactile paving</div>
-          <div class="device-pill">Match 92%</div>
-          <div class="device-bar"></div>
-        </div>
-        <div class="device-card">
-          <div class="device-title">Elevator signage</div>
-          <div class="device-pill">Needs review</div>
-          <div class="device-bar" style="--fill:35%"></div>
+
+      <div class="hero-visual holo">
+        <div class="holo-core">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring ring-delay"></div>
+          <div class="grid-lines"></div>
+
+          <div class="holo-card primary-card">
+            <span class="pill success">Ramp detected</span>
+            <strong>Match score</strong>
+            <div class="progress">
+              <span class="progress-fill" style="--progress: 0.88"></span>
+            </div>
+            <small>GPT verification 88% confidence</small>
+          </div>
+
+          <div class="holo-card secondary-card">
+            <span class="pill warning">Needs review</span>
+            <strong>Missing tactile paving</strong>
+            <small>Flagged in 12 nearby locations</small>
+          </div>
+
+          <div class="spark spark-one"></div>
+          <div class="spark spark-two"></div>
+          <div class="spark spark-three"></div>
         </div>
       </div>
     </header>
 
-    <main class="layout">
-      <section class="card">
-        <h2>Submit accessibility evidence</h2>
-        <ul class="meta-list">
-          <li>
-            <span class="meta-dot"></span>
-            Clear descriptions help the AI validate faster.
-          </li>
-          <li>
-            <span class="meta-dot"></span>
-            Photos should focus on the feature (ramps, elevators, signage).
-          </li>
-          <li>
-            <span class="meta-dot"></span>
-            Location data never leaves our verification pipeline.
-          </li>
-        </ul>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Auto GPS capture</span>
+        <span>Amazon Rekognition labels</span>
+        <span>GPT fact-checking</span>
+        <span>Instant municipal-ready exports</span>
+        <span>AccessibilityPlus community</span>
+      </div>
+    </div>
 
-        <form id="report-form">
-          <label>
-            Description
+    <main class="layout">
+      <section class="card form-card">
+        <div class="card-header">
+          <span class="eyebrow subtle">Submit evidence</span>
+          <h2>Drop a hyperlocal accessibility signal</h2>
+          <p>
+            Clear descriptions and focused photos help our models validate your
+            findings faster.
+          </p>
+        </div>
+
+        <form id="report-form" class="form">
+          <label class="form-field">
+            <span>Description</span>
             <textarea
               name="description"
               minlength="5"
               rows="3"
-              placeholder="e.g., Wheelchair ramp near Main St entrance"
+              placeholder="e.g., Wheelchair ramp near the Main St entrance with a gentle incline"
               required
             ></textarea>
           </label>
 
-          <label>
-            Photo
-            <input type="file" name="image" accept="image/*" required />
+          <label class="form-field file-field">
+            <span>Photo</span>
+            <div class="file-drop">
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                required
+                class="file-input"
+                aria-describedby="file-hint"
+              />
+              <div class="file-cta" aria-hidden="true">
+                <span class="file-icon"></span>
+                <div class="file-copy">
+                  <strong>Drag &amp; drop your evidence</strong>
+                  <span>or <em>browse from device</em></span>
+                </div>
+              </div>
+              <p class="file-selected" data-file-selected hidden>
+                <span class="pill success">Ready</span>
+                <span class="file-name" data-file-name>Image selected</span>
+              </p>
+            </div>
+            <small class="field-hint">Use landscape photos for richer AI labels.</small>
           </label>
 
           <div class="location-row">
@@ -94,8 +160,10 @@
           </div>
 
           <div class="action-row">
-            <button type="button" id="locate-btn">Refresh Location</button>
-            <button type="submit">Submit Report</button>
+            <button type="button" id="locate-btn" class="ghost">
+              Refresh location
+            </button>
+            <button type="submit">Submit report</button>
           </div>
         </form>
 
@@ -103,24 +171,117 @@
           Share a description and photo to get started.
         </div>
 
-        <p class="hint">
-          Location capture uses the browser's Geolocation API. It requires HTTPS
-          (or localhost) and explicit permission from the user.
-        </p>
+        <div class="card-footer">
+          <p class="hint">
+            Location capture uses the browser's Geolocation API. It requires
+            HTTPS (or localhost) and explicit permission from the user.
+          </p>
+          <p class="hint">
+            Want to supercharge adoption? Embed this form in community portals
+            or campus kiosks in minutes.
+          </p>
+        </div>
       </section>
 
-      <section class="card secondary">
-        <h2>View the collective map</h2>
-        <p>
-          Every approved report appears on an interactive Leaflet map with
-          markers, confidence scores, and links to supporting images.
-        </p>
-        <p>
-          Use the map to audit specific neighborhoods, export GeoJSON, or embed
-          the live feed in municipal dashboards.
-        </p>
-        <a class="link-button" href="/map">Open Map</a>
+      <section class="card intel-card">
+        <div class="card-header">
+          <span class="eyebrow subtle">Trust pipeline</span>
+          <h2>Human intent, machine-verified</h2>
+          <p>
+            Each submission flows through a transparent verification stack so
+            cities can act instantly.
+          </p>
+        </div>
+
+        <ol class="timeline">
+          <li>
+            <span class="timeline-index">01</span>
+            <div>
+              <h3>Capture &amp; geotag</h3>
+              <p>
+                Browser locks your coordinates and packages imagery with metadata
+                inside a signed payload.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline-index">02</span>
+            <div>
+              <h3>Rekognition insights</h3>
+              <p>
+                AWS checks for ramps, signage, elevators, and tactile cues with
+                tuned confidence thresholds.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline-index">03</span>
+            <div>
+              <h3>GPT audit</h3>
+              <p>
+                LLM compares human narrative with machine vision to flag
+                mismatches or boost trust signals.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline-index">04</span>
+            <div>
+              <h3>Map broadcast</h3>
+              <p>
+                Verified data emits to the public map, powering dashboards,
+                exports, and policy interventions.
+              </p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-label">Live map nodes</span>
+            <span class="metric-value">342</span>
+            <span class="metric-trend up">+28 this week</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Avg. GPT agreement</span>
+            <span class="metric-value">91%</span>
+            <span class="metric-trend neutral">Stable</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">High-priority alerts</span>
+            <span class="metric-value">17</span>
+            <span class="metric-trend warn">Escalated</span>
+          </div>
+        </div>
       </section>
     </main>
+
+    <section class="card secondary map-teaser shell">
+      <div class="map-teaser-grid">
+        <div>
+          <span class="eyebrow accent">Live intelligence layer</span>
+          <h2>Explore the interactive accessibility atlas</h2>
+          <p>
+            Filter by confidence, pivot to neighborhoods, and stream GeoJSON for
+            municipal dashboards or digital twins.
+          </p>
+          <a class="link-button primary" href="/map">Launch the map</a>
+        </div>
+        <div class="teaser-visual">
+          <div class="teaser-map">
+            <span class="teaser-pulse"></span>
+            <span class="teaser-pulse delay"></span>
+            <div class="teaser-tooltip">
+              <strong>Elevator signage • 95%</strong>
+              <small>Downtown transit hub</small>
+            </div>
+            <div class="teaser-tooltip ghost">
+              <strong>Ramp compliance • 82%</strong>
+              <small>Community center</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>
