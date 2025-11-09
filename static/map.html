@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AccessibilityPlus Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/static/css/map.css" />
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script defer src="/static/js/map.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="nav">
+        <div class="brand">AccessibilityPlus</div>
+        <div class="nav-links">
+          <a href="/">Report</a>
+          <a href="/map">Live Map</a>
+          <a href="mailto:hello@accessibility.plus">Partner</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="hero shell split">
+      <div>
+        <h1>Citywide accessibility, crowdsourced &amp; verified</h1>
+        <p>
+          Every marker represents a citizen report that cleared AI verification.
+          Filter by neighborhoods, inspect confidence scores, and jump straight
+          to the supporting images whenever evidence is needed.
+        </p>
+        <div class="highlight-grid">
+          <span class="chip">AI-verified</span>
+          <span class="chip">GeoJSON export</span>
+          <span class="chip">OpenStreetMap tiles</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <span class="orbit small"></span>
+        <span class="orbit large"></span>
+        <div class="device-card">
+          <div class="device-title">Ramp cluster</div>
+          <div class="device-pill">6 new pins</div>
+          <div class="device-bar" style="--fill:80%"></div>
+        </div>
+        <div class="device-card">
+          <div class="device-title">Confidence trend</div>
+          <div class="device-pill">Avg 88%</div>
+          <div class="device-bar" style="--fill:88%"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout single">
+      <section class="card map-card">
+        <header class="map-header">
+          <div>
+            <h2>Live accessibility map</h2>
+            <p>
+              Click a marker to view the user description, Rekognition tags, GPT
+              verdict, and download the image.
+            </p>
+          </div>
+          <a class="link-button" href="/">Submit another report</a>
+        </header>
+        <div id="map"></div>
+        <div id="map-status" class="status-banner">Loading map…</div>
+      </section>
+    </main>
+  </body>
+</html>
